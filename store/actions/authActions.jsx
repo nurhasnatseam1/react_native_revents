@@ -1,6 +1,6 @@
 import {SubmissionError,reset} from 'redux-form';
 import { Alert } from 'react-native';
-im
+import * as Facebook from 'expo-facebook';
 
 
 
@@ -61,6 +61,41 @@ export const updatePassword=(creds)=>async (dispatch,getState,{getFirebase})=>{
       }
 }
 
-export const facebookLogin=()=>async (dispathc,getState,{getFirebase,getFirestore})=>{
+export const facebookLogin=()=>async (dispatch,getState,{getFirebase,getFirestore})=>{
+      const firebase=getFirebase()
+      try {
+            await Facebook.initializeAsync('306354656626061')
+            const {
+              type,
+              token,
+              expires,
+              permissions,
+              declinedPermissions,
+            } = await Facebook.logInWithReadPermissionsAsync({
+              permissions: ['public_profile'],
+            });
+            if (type === 'success') {
+              /* // Get the user's name using Facebook's Graph API
+              const response = await fetch(`https://graph.facebook.com/me?access_token=${token}`);
+              Alert.alert('Logged in!', `Hi ${(await response.json()).name}!`); */
+              
 
+              //including firebase
+              const credential = firebase.auth.FacebookAuthProvider.credential(token);
+
+              // Sign in with credential from the Facebook user.
+              firebase.auth().signInWithCredential(credential).catch((error) => {
+                // Handle Errors here.
+              });
+
+
+            } else {
+              console.log('there was a problem connecting with facebook when login with facebook')
+            }
+          } catch ({ message }) {
+            alert(`Facebook Login Error: ${message}`);
+          }
 }
+
+//these are client id's to use for google login
+const ios_client_id='749422515483-j11e3s1sert2ns0pmm06npti9nom0e9o.apps.googleusercontent.com'
