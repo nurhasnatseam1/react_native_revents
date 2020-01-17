@@ -1,8 +1,8 @@
 import {SubmissionError,reset} from 'redux-form';
 import { Alert } from 'react-native';
 import * as Facebook from 'expo-facebook';
-
-
+import * as Google from "expo-google-app-auth";
+import { GoogleSignIn } from 'expo-google-sign-in';
 
 export const login=cred=>{
       return async (dispatch,getState,{getFirebase,getFirestore})=>{
@@ -98,4 +98,51 @@ export const facebookLogin=()=>async (dispatch,getState,{getFirebase,getFirestor
 }
 
 //these are client id's to use for google login
-const ios_client_id='749422515483-j11e3s1sert2ns0pmm06npti9nom0e9o.apps.googleusercontent.com'
+const IOS_CLIENT_ID='749422515483-j11e3s1sert2ns0pmm06npti9nom0e9o.apps.googleusercontent.com'
+const ANDROID_CLIENT_ID='749422515483-4jpbdf8982qt05ih6lfotugc8336hbdg.apps.googleusercontent.com'
+
+
+
+//only works in expo client app but not in production standalone app
+export const expoGoogleLogin=()=>async (dispatch,getState,{getFirebase,getFirestore})=>{
+      try {
+            const result = await Google.logInAsync({
+              iosClientId: IOS_CLIENT_ID,
+              androidClientId: ANDROID_CLIENT_ID,
+              scopes: ["profile", "email"],
+            });
+      
+            if (result.type === "success") {
+              console.log("LoginScreen.js.js 21 | ", result /* .user.givenName */);
+/*               this.props.navigation.navigate("Profile", {
+                username: result.user.givenName
+              }); //after Google login redirect to Profile */
+              return result.accessToken;
+            } else {
+              return { cancelled: true };
+            }
+          } catch (e) {
+            console.log('LoginScreen.js.js 30 | Error with login', e);
+            return { error: true };
+          }
+} 
+
+
+export const standAloneGoogleLogin=()=> async (dispatch,getState,{getFirebase,getFirestore})=>{
+      const firebase=getFirebase()
+      const firestore=getFirestore()
+      await GoogleSignIn.initAsync({
+          });
+          try {
+            await GoogleSignIn.askForPlayServicesAsync();
+            const { type, user,token } = await GoogleSignIn.signInAsync();
+            if (type === 'success') {
+                  const credential = firebase.auth.GoogleAuthProvider.credential(token);
+                  firebase.auth().signInWithCredential(credential).catch((error) => {
+                        // Handle Errors here.
+                      });
+            }
+          } catch ({ message }) {
+            alert('login: Error:' + message);
+          }
+}

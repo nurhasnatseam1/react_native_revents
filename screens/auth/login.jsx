@@ -5,14 +5,15 @@ import {Ionicons} from '@expo/vector-icons';
 
 
 //login and register actions
-import {registerUser,login,facebookLogin} from '../../store/actions/authActions';
+import {registerUser,login,facebookLogin,standAloneGoogleLogin} from '../../store/actions/authActions';
 import { connect } from 'react-redux';
 
 
 const mapActions={
   registerUser,
   login,
-  facebookLogin
+  facebookLogin,
+  standAloneGoogleLogin,
 }
 
 class LoginScreen extends React.Component{
@@ -38,10 +39,10 @@ class LoginScreen extends React.Component{
           <View style={{marginTop:9}}>
           <Text style={{color:'white',textAlign:'center',fontWeight:'700'}} >Or login with </Text>
           <View style={{flexDirection:'row',justifyContent:'space-around',alignSelf:'center'}}>
-            <TouchableOpacity onPress={()=>this.props.facebookLogin('facebook')} >
+            <TouchableOpacity onPress={()=>this.props.facebookLogin()} >
               <Ionicons size={44} name='logo-facebook' style={styles.icon}  ></Ionicons>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.props.socialLogin('google')} >
+            <TouchableOpacity onPress={()=>this.props.standAloneGoogleLogin()} >
               <Ionicons size={44} name='logo-google' style={styles.icon}  ></Ionicons>
             </TouchableOpacity>
           </View>
