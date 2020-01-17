@@ -82,12 +82,9 @@ export const facebookLogin=()=>async (dispatch,getState,{getFirebase,getFirestor
 
               //including firebase
               const credential = firebase.auth.FacebookAuthProvider.credential(token);
-
-              // Sign in with credential from the Facebook user.
               firebase.auth().signInWithCredential(credential).catch((error) => {
-                // Handle Errors here.
-              });
-
+                    // Handle Errors here.
+                  });
 
             } else {
               console.log('there was a problem connecting with facebook when login with facebook')
@@ -136,13 +133,22 @@ export const standAloneGoogleLogin=()=> async (dispatch,getState,{getFirebase,ge
             await   GoogleSignIn.initAsync({
             });
             await GoogleSignIn.askForPlayServicesAsync();
-            const /* { type, user,token } */ result = await GoogleSignIn.signInAsync();
+            const { type, googleUser}= await GoogleSignIn.signInAsync();
             alert('this is result' , result)
-            if (result.type === 'success') {
-                  const credential = firebase.auth.GoogleAuthProvider.credential(token);
-                  firebase.auth().signInWithCredential(credential).catch((error) => {
-                        // Handle Errors here.
-                      });
+            if (type === 'success') {
+                  var credential = firebase.auth.GoogleAuthProvider.credential(
+                        googleUser.getAuthResponse().id_token);
+                    // Sign in with credential from the Google user.
+                    firebase.auth().signInWithCredential(credential).catch(function(error) {
+                      // Handle Errors here.
+                      var errorCode = error.code;
+                      var errorMessage = error.message;
+                      // The email of the user's account used.
+                      var email = error.email;
+                      // The firebase.auth.AuthCredential type that was used.
+                      var credential = error.credential;
+                      // ...
+                    });
             }
           } catch ({ message }) {
             alert('login: Error:' + message);
