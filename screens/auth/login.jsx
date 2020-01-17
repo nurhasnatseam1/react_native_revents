@@ -1,5 +1,5 @@
 import React from 'react';
-import {View,Text,StyleSheet,KeyboardAvoidingView, ScrollView, TextInput, Button, TouchableHighlight, TouchableOpacity} from 'react-native';
+import {View,Text,StyleSheet,KeyboardAvoidingView, ScrollView, TextInput, Button, TouchableHighlight, TouchableOpacity, Alert} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {Ionicons} from '@expo/vector-icons';
 
@@ -42,7 +42,7 @@ class LoginScreen extends React.Component{
             <TouchableOpacity onPress={()=>this.props.facebookLogin()} >
               <Ionicons size={44} name='logo-facebook' style={styles.icon}  ></Ionicons>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.props.standAloneGoogleLogin()} >
+            <TouchableOpacity onPress={()=>this.props.standAloneGoogleLogin() } >
               <Ionicons size={44} name='logo-google' style={styles.icon}  ></Ionicons>
             </TouchableOpacity>
           </View>
