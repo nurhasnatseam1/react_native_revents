@@ -1,8 +1,8 @@
 import {SubmissionError,reset} from 'redux-form';
 import { Alert } from 'react-native';
 import * as Facebook from 'expo-facebook';
-import * as Google from "expo-google-app-auth";
-import { GoogleSignIn } from 'expo-google-sign-in';
+
+import * as GoogleSignIn  from 'expo-google-sign-in';
 
 export const login=cred=>{
       return async (dispatch,getState,{getFirebase,getFirestore})=>{
@@ -130,10 +130,11 @@ export const expoGoogleLogin=()=>async (dispatch,getState,{getFirebase,getFirest
 
 export const standAloneGoogleLogin=()=> async (dispatch,getState,{getFirebase,getFirestore})=>{
       const firebase=getFirebase()
-      const firestore=getFirestore()
-      await GoogleSignIn.initAsync({
-          });
+
+      
           try {
+            await   GoogleSignIn.initAsync({
+            });
             await GoogleSignIn.askForPlayServicesAsync();
             const { type, user,token } = await GoogleSignIn.signInAsync();
             if (type === 'success') {
