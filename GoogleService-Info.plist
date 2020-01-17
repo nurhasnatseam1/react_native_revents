@@ -6,6 +6,8 @@
 	<string>682667176462-t8ng7a2089vqn38svtipkau8jduaoq2b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
 	<string>com.googleusercontent.apps.682667176462-t8ng7a2089vqn38svtipkau8jduaoq2b</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>682667176462-mtdv8g1hhe3lkkte8qvf2oal5f32p8qm.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
 	<string>AIzaSyBrtvexwRvlyZH_rv-8VoAy58-kZK7W3s8</string>
 	<key>GCM_SENDER_ID</key>
@@ -29,7 +31,7 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:682667176462:ios:2d4f48af02932798b4825f</string>
+	<string>1:682667176462:ios:e3db053b915196dcb4825f</string>
 	<key>DATABASE_URL</key>
 	<string>https://revents-977c1.firebaseio.com</string>
 </dict>

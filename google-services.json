@@ -1,3 +1,6 @@
+
+
+
 {
   "project_info": {
     "project_number": "682667176462",
@@ -8,12 +11,20 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:682667176462:android:7c6f29303eba1191b4825f",
+        "mobilesdk_app_id": "1:682667176462:android:116ffa9021416201b4825f",
         "android_client_info": {
           "package_name": "revents.expo.googlesignin"
         }
       },
       "oauth_client": [
+        {
+          "client_id": "682667176462-mtdv8g1hhe3lkkte8qvf2oal5f32p8qm.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "revents.expo.googlesignin",
+            "certificate_hash": "698cd3f377d8a2b3db75ee81c1c22eb5b0a140ff"
+          }
+        },
         {
           "client_id": "682667176462-lc0i01c7ntvelusjorr3p18t1oo569gq.apps.googleusercontent.com",
           "client_type": 3
@@ -30,6 +41,13 @@
             {
               "client_id": "682667176462-lc0i01c7ntvelusjorr3p18t1oo569gq.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "682667176462-t8ng7a2089vqn38svtipkau8jduaoq2b.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "revents.expo.googlesignin"
+              }
             }
           ]
         }

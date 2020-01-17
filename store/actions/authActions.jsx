@@ -136,8 +136,9 @@ export const standAloneGoogleLogin=()=> async (dispatch,getState,{getFirebase,ge
             await   GoogleSignIn.initAsync({
             });
             await GoogleSignIn.askForPlayServicesAsync();
-            const { type, user,token } = await GoogleSignIn.signInAsync();
-            if (type === 'success') {
+            const /* { type, user,token } */ result = await GoogleSignIn.signInAsync();
+            alert('this is result' , result)
+            if (result.type === 'success') {
                   const credential = firebase.auth.GoogleAuthProvider.credential(token);
                   firebase.auth().signInWithCredential(credential).catch((error) => {
                         // Handle Errors here.
