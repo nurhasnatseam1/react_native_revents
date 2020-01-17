@@ -134,10 +134,11 @@ export const standAloneGoogleLogin=()=> async (dispatch,getState,{getFirebase,ge
             });
             await GoogleSignIn.askForPlayServicesAsync();
             const { type, googleUser}= await GoogleSignIn.signInAsync();
-            alert('this is result' , result)
+            
             if (type === 'success') {
+                  alert(googleUser.getAuthResponse())
                   var credential = firebase.auth.GoogleAuthProvider.credential(
-                        googleUser.getAuthResponse().id_token);
+                        googleUser.auth.idToken);
                     // Sign in with credential from the Google user.
                     firebase.auth().signInWithCredential(credential).catch(function(error) {
                       // Handle Errors here.
