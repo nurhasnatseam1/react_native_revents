@@ -1,7 +1,10 @@
 import {SubmissionError,reset} from 'redux-form';
+//can not use Alert outside react element you have  to use only alert function
 import { Alert } from 'react-native';
-import * as Facebook from 'expo-facebook';
 
+//these imports are for social login
+import * as Facebook from 'expo-facebook';
+import * as Google from 'expo-google-app-auth';
 import * as GoogleSignIn  from 'expo-google-sign-in';
 
 export const login=cred=>{
@@ -95,13 +98,14 @@ export const facebookLogin=()=>async (dispatch,getState,{getFirebase,getFirestor
 }
 
 //these are client id's to use for google login
-const IOS_CLIENT_ID='749422515483-j11e3s1sert2ns0pmm06npti9nom0e9o.apps.googleusercontent.com'
-const ANDROID_CLIENT_ID='749422515483-4jpbdf8982qt05ih6lfotugc8336hbdg.apps.googleusercontent.com'
+const IOS_CLIENT_ID='682667176462-t8ng7a2089vqn38svtipkau8jduaoq2b.apps.googleusercontent.com'
+const ANDROID_CLIENT_ID='682667176462-mtdv8g1hhe3lkkte8qvf2oal5f32p8qm.apps.googleusercontent.com'
 
 
 
 //only works in expo client app but not in production standalone app
 export const expoGoogleLogin=()=>async (dispatch,getState,{getFirebase,getFirestore})=>{
+      const firebase=getFirebase()
       try {
             const result = await Google.logInAsync({
               iosClientId: IOS_CLIENT_ID,
@@ -111,9 +115,14 @@ export const expoGoogleLogin=()=>async (dispatch,getState,{getFirebase,getFirest
       
             if (result.type === "success") {
               console.log("LoginScreen.js.js 21 | ", result /* .user.givenName */);
-/*               this.props.navigation.navigate("Profile", {
-                username: result.user.givenName
-              }); //after Google login redirect to Profile */
+              //login with credentials
+              const credential = firebase.auth.GoogleAuthProvider.credential(result.idToken);
+              firebase.auth().signInWithCredential(credential).catch((error) => {
+                    console.log(error)
+                    alert(error)
+                  });
+
+
               return result.accessToken;
             } else {
               return { cancelled: true };
@@ -133,14 +142,13 @@ export const standAloneGoogleLogin=()=> async (dispatch,getState,{getFirebase,ge
             await   GoogleSignIn.initAsync({
             });
             await GoogleSignIn.askForPlayServicesAsync();
-            const { type, googleUser}= await GoogleSignIn.signInAsync();
+            const { type, user}= await GoogleSignIn.signInAsync();
             
             if (type === 'success') {
-                  alert(googleUser.getAuthResponse())
                   var credential = firebase.auth.GoogleAuthProvider.credential(
-                        googleUser.auth.idToken);
+                        user.auth.idToken);
                     // Sign in with credential from the Google user.
-                    firebase.auth().signInWithCredential(credential).catch(function(error) {
+                    firebase.auth().signInWithCredential(credential).then(()=>alert(user || 'google user is null')).catch(function(error) {
                       // Handle Errors here.
                       var errorCode = error.code;
                       var errorMessage = error.message;

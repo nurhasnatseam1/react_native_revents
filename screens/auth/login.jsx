@@ -2,10 +2,11 @@ import React from 'react';
 import {View,Text,StyleSheet,KeyboardAvoidingView, ScrollView, TextInput, Button, TouchableHighlight, TouchableOpacity, Alert} from 'react-native';
 import {LinearGradient} from 'expo-linear-gradient';
 import {Ionicons} from '@expo/vector-icons';
+import Constants from 'expo-constants';
 
 
 //login and register actions
-import {registerUser,login,facebookLogin,standAloneGoogleLogin} from '../../store/actions/authActions';
+import {registerUser,login,facebookLogin,standAloneGoogleLogin,expoGoogleLogin} from '../../store/actions/authActions';
 import { connect } from 'react-redux';
 
 
@@ -14,11 +15,16 @@ const mapActions={
   login,
   facebookLogin,
   standAloneGoogleLogin,
+  expoGoogleLogin
 }
 
 class LoginScreen extends React.Component{
   
   render(){
+    let googleSignInFunction=this.props.standAloneGoogleLogin;
+    if(Constants.appOwnership==='expo'){
+      googleSignInFunction=this.props.expoGoogleLogin
+    }
     console.log(this.props)
     return (
       <View style={styles.container}>
@@ -42,7 +48,7 @@ class LoginScreen extends React.Component{
             <TouchableOpacity onPress={()=>this.props.facebookLogin()} >
               <Ionicons size={44} name='logo-facebook' style={styles.icon}  ></Ionicons>
             </TouchableOpacity>
-            <TouchableOpacity onPress={()=>this.props.standAloneGoogleLogin() } >
+            <TouchableOpacity onPress={()=>googleSignInFunction() } >
               <Ionicons size={44} name='logo-google' style={styles.icon}  ></Ionicons>
             </TouchableOpacity>
           </View>
@@ -95,3 +101,5 @@ const styles=StyleSheet.create({
 
 
 export default connect(null,mapActions)(LoginScreen)
+
+

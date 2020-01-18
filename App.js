@@ -59,7 +59,8 @@ const rrfProps = {
 }
 
 
-
+///import loacal packages
+import RootNavigator from './navigation/navigator';
 
 
 export default function App() {
@@ -68,6 +69,7 @@ export default function App() {
     <Provider store={store}>
       <ReactReduxFirebaseProvider {...rrfProps}>
         <LoginScreen></LoginScreen>
+       {/* { <RootNavigator/>} */}
       </ReactReduxFirebaseProvider>
     </Provider>
     </View>
@@ -78,7 +80,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    alignItems: 'center',
     justifyContent: 'center',
   },
 });
